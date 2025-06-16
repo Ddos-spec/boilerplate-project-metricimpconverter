@@ -8,7 +8,6 @@
 
 'use strict';
 
-var expect = require('chai').expect;
 var ConvertHandler = require('../controllers/convertHandler.js');
 
 module.exports = function (app) {
@@ -23,18 +22,15 @@ module.exports = function (app) {
       var initNum = convertHandler.getNum(input);
       var initUnit = convertHandler.getUnit(input);
 
-      // Cek apakah ada input yang tidak valid
+      // Cek apakah ada input yang tidak valid dan kirim error dalam format JSON
       if (initNum === 'invalid number' && initUnit === 'invalid unit') {
-        res.json({ error: 'invalid number and unit' });
-        return;
+        return res.json({ error: 'invalid number and unit' });
       }
       if (initNum === 'invalid number') {
-        res.json({ error: 'invalid number' });
-        return;
+        return res.json({ error: 'invalid number' });
       }
       if (initUnit === 'invalid unit') {
-        res.json({ error: 'invalid unit' });
-        return;
+        return res.json({ error: 'invalid unit' });
       }
       
       // Jika input valid, lanjutkan proses konversi

@@ -18,27 +18,28 @@ module.exports = function (app) {
     .get(function (req, res){
       var input = req.query.input;
       
-      // Panggil method dari controller untuk mem-parsing input
       var initNum = convertHandler.getNum(input);
       var initUnit = convertHandler.getUnit(input);
 
-      // Cek apakah ada input yang tidak valid dan kirim error dalam format JSON
+      // Cek error dan kirim sebagai PLAIN TEXT
       if (initNum === 'invalid number' && initUnit === 'invalid unit') {
-        return res.json({ error: 'invalid number and unit' });
+        res.send('invalid number and unit');
+        return;
       }
       if (initNum === 'invalid number') {
-        return res.json({ error: 'invalid number' });
+        res.send('invalid number');
+        return;
       }
       if (initUnit === 'invalid unit') {
-        return res.json({ error: 'invalid unit' });
+        res.send('invalid unit');
+        return;
       }
       
-      // Jika input valid, lanjutkan proses konversi
+      // Jika valid, kirim JSON seperti biasa
       var returnNum = convertHandler.convert(initNum, initUnit);
       var returnUnit = convertHandler.getReturnUnit(initUnit);
       var toString = convertHandler.getString(initNum, initUnit, returnNum, returnUnit);
       
-      // Kirim hasil konversi dalam format JSON
       res.json({
         initNum: initNum,
         initUnit: initUnit,
